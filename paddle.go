@@ -14,7 +14,6 @@ type paddle struct {
 }
 
 func (paddle *paddle) draw() {
-	// fmt.Println("inside the draw method for the paddle")
 	startX := int(paddle.x - paddle.width/2)
 	startY := int(paddle.y - paddle.height/2)
 
@@ -29,11 +28,10 @@ func (paddle *paddle) draw() {
 }
 
 func (paddle *paddle) update(elapsedTime float32) {
-	// fmt.Println("inside the update method for the paddle")
-	if keyState[sdl.SCANCODE_UP] != 0 {
+	if keyState[sdl.SCANCODE_UP] != 0 || keyState[sdl.SCANCODE_W] != 0 {
 		paddle.y -= paddle.speed * elapsedTime
 	}
-	if keyState[sdl.SCANCODE_DOWN] != 0 {
+	if keyState[sdl.SCANCODE_DOWN] != 0 || keyState[sdl.SCANCODE_S] != 0 {
 		paddle.y += paddle.speed * elapsedTime
 	}
 }

@@ -1,6 +1,7 @@
 package main
 
 type gameWinner int
+
 const (
 	nobody   gameWinner = iota
 	player   gameWinner = iota
@@ -8,6 +9,7 @@ const (
 )
 
 type gameState int
+
 const (
 	start gameState = iota
 	play  gameState = iota

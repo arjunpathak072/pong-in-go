@@ -94,7 +94,7 @@ func main() {
 		pos:    pos{50, getCenter().y},
 		width:  20,
 		height: 100,
-		speed:  300,
+		speed:  500,
 		score:  0,
 		color:  color{255, 255, 255},
 	}
@@ -103,7 +103,7 @@ func main() {
 		pos:    pos{windowWidth - 50, getCenter().y},
 		width:  20,
 		height: 100,
-		speed:  300,
+		speed:  500,
 		score:  0,
 		color:  color{255, 255, 255},
 	}
@@ -148,18 +148,20 @@ func main() {
 			switch winner {
 			case player:
 				mix.HaltMusic()
-				defeatSound.Play(1, 0)
+				victorySound.Play(1, 0)
 				drawMessage(getCenter(), color{0, 255, 0}, 10, &winnerMessage)
 				fmt.Println("you won!")
 			case computer:
 				mix.HaltMusic()
-				victorySound.Play(1, 0)
+				defeatSound.Play(1, 0)
 				drawMessage(getCenter(), color{255, 0, 0}, 10, &loserMessage)
 				fmt.Println("compter won.")
 			}
 
 			playerOne.score = 0
 			playerTwo.score = 0
+			ball.xVelocity = 400
+			ball.yVelocity = 400
 			winner = nobody
 			state = start
 

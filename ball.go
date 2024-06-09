@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/veandco/go-sdl2/mix"
 )
 
@@ -36,7 +34,6 @@ func (ball *ball) update(left *paddle, right *paddle, elapsedTime float32, ballH
 	ball.y += ball.yVelocity * elapsedTime
 
 	if ball.y-ball.radius < 0 || ball.y+ball.radius > float32(windowHeight) {
-		fmt.Println("collision detected!")
 		ballHitSound.Play(1, 0)
 		ball.yVelocity = -ball.yVelocity
 	}
@@ -56,7 +53,6 @@ func (ball *ball) update(left *paddle, right *paddle, elapsedTime float32, ballH
 			ball.xVelocity = -ball.xVelocity
 			ball.x = left.x + left.width/2 + ball.radius
 			ballHitSound.Play(1, 0)
-			fmt.Println("collision detected!")
 		}
 	}
 
@@ -65,7 +61,6 @@ func (ball *ball) update(left *paddle, right *paddle, elapsedTime float32, ballH
 			ball.xVelocity = -ball.xVelocity
 			ball.x = right.x - right.width/2 - ball.radius
 			ballHitSound.Play(1, 0)
-			fmt.Println("collision detected!")
 		}
 	}
 }
