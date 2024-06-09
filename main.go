@@ -16,7 +16,7 @@ var keyState = sdl.GetKeyboardState()
 const (
 	windowWidth  = 800
 	windowHeight = 600
-	maxScore     = 1
+	maxScore     = 9
 	lineWidth    = 2
 )
 
