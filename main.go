@@ -16,7 +16,7 @@ var keyState = sdl.GetKeyboardState()
 const (
 	windowWidth  = 800
 	windowHeight = 600
-	maxScore     = 9
+	maxScore     = 1
 	lineWidth    = 2
 )
 
@@ -35,18 +35,31 @@ func main() {
 	}
 
 	mix.OpenAudio(44100, mix.DEFAULT_FORMAT, 2, 1024)
-	gameOverSound, err := mix.LoadWAV("assets/game-over.mp3")
+	defer mix.CloseAudio()
+
+	defeatSound, err := mix.LoadWAV("assets/game-over.mp3")
 	if err != nil {
 		fmt.Println("reading game over sound effect: ", err)
 		return
 	}
-	defer gameOverSound.Free()
+	defer defeatSound.Free()
 
 	ballHitSound, err := mix.LoadWAV("assets/ball-hit.wav")
 	if err != nil {
 		fmt.Println("reading ball hit sound: ", err)
 	}
 	defer ballHitSound.Free()
+
+	victorySound, err := mix.LoadWAV("assets/victory.mp3")
+	if err != nil {
+		fmt.Println("reading victory sound effect: ", err)
+	}
+	defer victorySound.Free()
+
+	backgroundMusic, err := mix.LoadMUS("assets/background-music.mp3")
+	if err != nil {
+		fmt.Println("reading background music: ", err)
+	}
 
 	window, err := sdl.CreateWindow(
 		"pong in Go I guess",
@@ -125,7 +138,7 @@ func main() {
 				winner = player
 			}
 			if keyState[sdl.SCANCODE_SPACE] != 0 {
-				winner = nobody
+				backgroundMusic.Play(10)
 				state = play
 			}
 		}
@@ -134,16 +147,29 @@ func main() {
 		if winner != nobody {
 			switch winner {
 			case player:
+				mix.HaltMusic()
+				defeatSound.Play(1, 0)
 				drawMessage(getCenter(), color{0, 255, 0}, 10, &winnerMessage)
 				fmt.Println("you won!")
 			case computer:
-				gameOverSound.PlayTimed(1, -1, 1000)
+				mix.HaltMusic()
+				victorySound.Play(1, 0)
 				drawMessage(getCenter(), color{255, 0, 0}, 10, &loserMessage)
 				fmt.Println("compter won.")
 			}
+
 			playerOne.score = 0
 			playerTwo.score = 0
+			winner = nobody
 			state = start
+
+			texture.Update(nil,
+				unsafe.Pointer(&pixels[0]),
+				windowWidth*4,
+			)
+			renderer.Copy(texture, nil, nil)
+			renderer.Present()
+			sdl.WaitEventTimeout(10000)
 		} else {
 			drawLine()
 			playerOne.draw()

@@ -37,7 +37,7 @@ func (ball *ball) update(left *paddle, right *paddle, elapsedTime float32, ballH
 
 	if ball.y-ball.radius < 0 || ball.y+ball.radius > float32(windowHeight) {
 		fmt.Println("collision detected!")
-		ballHitSound.PlayTimed(1, -1, 100)
+		ballHitSound.Play(1, 0)
 		ball.yVelocity = -ball.yVelocity
 	}
 
@@ -55,7 +55,7 @@ func (ball *ball) update(left *paddle, right *paddle, elapsedTime float32, ballH
 		if ball.y > left.y-left.height/2 && ball.y < left.y+left.height/2 {
 			ball.xVelocity = -ball.xVelocity
 			ball.x = left.x + left.width/2 + ball.radius
-			ballHitSound.PlayTimed(1, -1, 100)
+			ballHitSound.Play(1, 0)
 			fmt.Println("collision detected!")
 		}
 	}
@@ -64,7 +64,7 @@ func (ball *ball) update(left *paddle, right *paddle, elapsedTime float32, ballH
 		if ball.y > right.y-right.height/2 && ball.y < right.y+right.height/2 {
 			ball.xVelocity = -ball.xVelocity
 			ball.x = right.x - right.width/2 - ball.radius
-			ballHitSound.PlayTimed(1, -1, 100)
+			ballHitSound.Play(1, 0)
 			fmt.Println("collision detected!")
 		}
 	}
