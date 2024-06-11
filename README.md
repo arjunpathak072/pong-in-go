@@ -1,4 +1,8 @@
 # 🏓 Pong game in Go
+A classic pong game clone written in Go, using SDL2
+
+[![Watch the video](https://raw.githubusercontent.com/arjunpathak072/pong-in-go/main/assets/thumbnail.png)](https://raw.githubusercontent.com/arjunpathak072/pong-in-go/main/assets/gameplay.mp4)
+
 ## 🤓 Technical Jargon
 * Uses Go bindings of the SDL2 library to handle rendering
 * Uses the sdl/mix module in go to implement sounds in the game
