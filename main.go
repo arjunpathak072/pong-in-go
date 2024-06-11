@@ -16,7 +16,7 @@ var keyState = sdl.GetKeyboardState()
 const (
 	windowWidth  = 800
 	windowHeight = 600
-	maxScore     = 1
+	maxScore     = 9
 	lineWidth    = 2
 )
 
@@ -118,7 +118,8 @@ func main() {
 
 	var frameStart time.Time
 	var elapsedTime float32
-
+	
+	backgroundMusic.Play(10)
 	for {
 		frameStart = time.Now()
 		for event := sdl.PollEvent(); event != nil; event = sdl.PollEvent() {
@@ -138,7 +139,6 @@ func main() {
 				winner = player
 			}
 			if keyState[sdl.SCANCODE_SPACE] != 0 {
-				backgroundMusic.Play(10)
 				state = play
 			}
 		}
@@ -147,12 +147,12 @@ func main() {
 		if winner != nobody {
 			switch winner {
 			case player:
-				mix.HaltMusic()
+				mix.FadeOutMusic(2000)
 				victorySound.Play(1, 0)
 				drawMessage(getCenter(), color{0, 255, 0}, 10, &winnerMessage)
 				fmt.Println("you won!")
 			case computer:
-				mix.HaltMusic()
+				mix.FadeOutMusic(2000)
 				defeatSound.Play(1, 0)
 				drawMessage(getCenter(), color{255, 0, 0}, 10, &loserMessage)
 				fmt.Println("compter won.")
